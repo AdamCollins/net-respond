@@ -6,12 +6,12 @@ let openConnections = {};
 /**
  *
  * @param {string} strMsg Message sent.
- * @param {number} port Port of server Listening.
+ * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
  */
-function send(strMsg, port, cb) {
-    let pack = parseMsg(strMsg, port, -1);
-    let conn = addConnection(port, cb);
+function send(strMsg, address, cb) {
+    let pack = parseMsg(strMsg, address, null);
+    let conn = addConnection(address, cb);
     conn.writeJSON(pack);
 }
 exports.send = send;
@@ -25,7 +25,7 @@ function serve(port, cb) {
         socket.on('data', (data) => {
             let pack = readJSON(data);
             cb({
-                respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localPort)),
+                respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localAddress)),
                 data: pack
             });
         });
@@ -36,6 +36,7 @@ exports.serve = serve;
 function writeJSON(json) {
     let str = JSON.stringify(json);
     let buff = Buffer.from(str);
+    console.log('sending', str);
     this.write(buff);
 }
 net.Socket.prototype.writeJSON = writeJSON;
@@ -55,17 +56,17 @@ function parseMsg(str, to, from) {
         value: str
     };
 }
-function addConnection(port, cb) {
-    let conn = new net.Socket().connect(port);
+function addConnection(address, cb) {
+    let ip = address.split(':')[0];
+    let port = parseInt(address.split(':')[1]);
+    let conn = new net.Socket().connect(port, ip);
     conn.on('data', (data) => {
         let packData = readJSON(data);
-        if (packData.from = port) {
-            cb(packData);
-        }
+        cb(packData);
     });
     conn.on('close', () => {
-        openConnections[port] = null;
+        openConnections[address] = null;
     });
-    openConnections[port] = conn;
+    openConnections[address] = conn;
     return conn;
 }

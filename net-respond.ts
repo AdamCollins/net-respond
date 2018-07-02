@@ -3,8 +3,8 @@
 let net = require('net');
 let openConnections: object = {};
 interface pack {
-    from: number;
-    to: number;
+    from: string;
+    to: string;
     value: string;
 }
 
@@ -12,12 +12,12 @@ interface pack {
 /**
  * 
  * @param {string} strMsg Message sent.
- * @param {number} port Port of server Listening.
+ * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
  */
-export function send(strMsg: string, port: number, cb) {
-    let pack = parseMsg(strMsg, port, -1);
-    let conn = addConnection(port, cb);
+export function send(strMsg: string, address: string, cb) {
+    let pack = parseMsg(strMsg, address, null);
+    let conn = addConnection(address, cb);
     conn.writeJSON(pack);
 }
 
@@ -32,7 +32,7 @@ export function serve(port: number, cb) {
         socket.on('data', (data) => {
             let pack = readJSON(data);
             cb({
-                respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localPort)),
+                respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localAddress)),
                 data: pack
             });
         });
@@ -44,6 +44,7 @@ export function serve(port: number, cb) {
 function writeJSON(json: pack) {
     let str = JSON.stringify(json);
     let buff = Buffer.from(str);
+    console.log('sending',str);
     this.write(buff);
 }
 
@@ -57,7 +58,7 @@ function readJSON(buffer): pack {
     }
 }
 
-function parseMsg(str: string, to: number, from: number): pack {
+function parseMsg(str: string, to: string, from: string): pack {
     return {
         from: from,
         to: to,
@@ -66,18 +67,18 @@ function parseMsg(str: string, to: number, from: number): pack {
 }
 
 
-function addConnection(port: number, cb) {
-    let conn = new net.Socket().connect(port);
+function addConnection(address: string, cb) {
+    let ip = address.split(':')[0];
+    let port = parseInt(address.split(':')[1]);
+    let conn = new net.Socket().connect(port,ip);
     conn.on('data', (data) => {
         let packData: pack = readJSON(data);
-        if (packData.from = port) {
-            cb(packData);
-        }
+        cb(packData);
     });
     conn.on('close', () => {
-        openConnections[port] = null;
+        openConnections[address] = null;
     });
-    openConnections[port] = conn;
+    openConnections[address] = conn;
     return conn;
 }
 
