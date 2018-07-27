@@ -6,17 +6,6 @@ An npm module that allows simple call and response dynamics for easy communicati
 
 net-respond was modeled after Express.JS. 
 
-## Compatibility
-* AngularJS
-* ReactJS
-* Node.js
-* JQuery.js
-* P5.JS
-* Underscore.js
-* Backbone.js
-* Ember.js
-* LiterallyAnything.js
-
 ## Install
 ### npm install
 ```
@@ -59,7 +48,6 @@ recieved: { from: null, to: 'localhost:1337', value: 'Here is some Pie' }
 sending: Thanks for the Pie
 ```
 
-For a more indepth reference on how to use JustJS checkout a comprehensive guide [here](https://www.w3schools.com/js/default.asp).
 
 ## License
 Distributed under the MIT license.
