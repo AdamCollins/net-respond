@@ -19,8 +19,8 @@ Here is an example of a simple server/client connection
 ```javascript
 import {send} from './net-respond';
 let address = 'localhost:1337'; //Address of host
-
 let msg = 'Here is some Pie' //Message being sent.
+
 console.log('sending:',msg);
 send(msg,address,(res)=>{
 	console.log('recieved:',res);
@@ -29,6 +29,7 @@ send(msg,address,(res)=>{
 ### Server
 ```javascript
 import {serve} from './net-respond';
+
 //listening on port 1337
 serve(1337,(req)=>{
 	let noun = req.data.value.split(' ').slice(-1);
