@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const net_respond_1 = require("./net-respond");
 let address = 'localhost:1337';
-net_respond_1.send('Here is some Pie', address, (res) => {
-    console.log(res);
+let msg = 'Here is some Pie';
+console.log('sending:', msg);
+net_respond_1.send(msg, address, (res) => {
+    console.log('recieved:', res);
 });

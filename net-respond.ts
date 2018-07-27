@@ -10,7 +10,6 @@ interface pack {
 
 
 /**
- * 
  * @param {string} strMsg Message sent.
  * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
@@ -23,7 +22,6 @@ export function send(strMsg: string, address: string, cb) {
 
 
 /**
- * 
  * @param {number} port Port server listens on.
  * @param {function} cb Callback called when data is recieved. data and response function provided  
  */
@@ -44,7 +42,6 @@ export function serve(port: number, cb) {
 function writeJSON(json: pack) {
     let str = JSON.stringify(json);
     let buff = Buffer.from(str);
-    console.log('sending',str);
     this.write(buff);
 }
 
@@ -81,4 +78,3 @@ function addConnection(address: string, cb) {
     openConnections[address] = conn;
     return conn;
 }
-

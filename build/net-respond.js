@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let net = require('net');
 let openConnections = {};
 /**
- *
  * @param {string} strMsg Message sent.
  * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
@@ -16,7 +15,6 @@ function send(strMsg, address, cb) {
 }
 exports.send = send;
 /**
- *
  * @param {number} port Port server listens on.
  * @param {function} cb Callback called when data is recieved. data and response function provided
  */
@@ -36,7 +34,6 @@ exports.serve = serve;
 function writeJSON(json) {
     let str = JSON.stringify(json);
     let buff = Buffer.from(str);
-    console.log('sending', str);
     this.write(buff);
 }
 net.Socket.prototype.writeJSON = writeJSON;
