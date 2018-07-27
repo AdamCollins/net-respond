@@ -9,7 +9,7 @@ net-respond allows simple call and response dynamics for easy communication over
 ## Install
 ### npm install
 ```
-npm install just.js
+npm install net-respond
 ```
 
 ## Usage example
