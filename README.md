@@ -1,10 +1,10 @@
 # net-respond
-An npm module that allows simple call and response dynamics for easy communication over TCP. 
+A Node module written in Typescript that allows for responses to TCP messages. Based off of ExpressJS request handling. 
 
 [![Build Status][travis-image]][travis-url]
 [![npm version](https://badge.fury.io/js/just.js.svg)](https://badge.fury.io/js/just.js)
 
-net-respond was modeled after Express.JS. 
+net-respond allows simple call and response dynamics for easy communication over TCP. 
 
 ## Install
 ### npm install
