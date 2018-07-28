@@ -8,18 +8,17 @@ interface pack {
     value: string;
 }
 
-
 /**
- * @param {string} strMsg Message sent.
+ * @param {object} msg Message sent.
  * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
  */
-export function send(strMsg: string, address: string, cb) {
+export function send(msg: object, address: string, cb) {
+    let strMsg : string = JSON.stringify(msg);
     let pack = parseMsg(strMsg, address, null);
     let conn = addConnection(address, cb);
     conn.writeJSON(pack);
 }
-
 
 /**
  * @param {number} port Port server listens on.
@@ -29,6 +28,7 @@ export function serve(port: number, cb) {
     let s = net.createServer((socket) => {
         socket.on('data', (data) => {
             let pack = readJSON(data);
+            pack.value = JSON.parse(pack.value);
             cb({
                 respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localAddress)),
                 data: pack
@@ -37,7 +37,6 @@ export function serve(port: number, cb) {
     }).listen(port);
     openConnections[port] = s;
 }
-
 
 function writeJSON(json: pack) {
     let str = JSON.stringify(json);
@@ -62,7 +61,6 @@ function parseMsg(str: string, to: string, from: string): pack {
         value: str
     }
 }
-
 
 function addConnection(address: string, cb) {
     let ip = address.split(':')[0];

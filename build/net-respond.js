@@ -4,11 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let net = require('net');
 let openConnections = {};
 /**
- * @param {string} strMsg Message sent.
+ * @param {object} msg Message sent.
  * @param {string} address Address of server Listening.
  * @param {function} cb Callback called when message is responded to.
  */
-function send(strMsg, address, cb) {
+function send(msg, address, cb) {
+    let strMsg = JSON.stringify(msg);
     let pack = parseMsg(strMsg, address, null);
     let conn = addConnection(address, cb);
     conn.writeJSON(pack);
@@ -22,6 +23,7 @@ function serve(port, cb) {
     let s = net.createServer((socket) => {
         socket.on('data', (data) => {
             let pack = readJSON(data);
+            pack.value = JSON.parse(pack.value);
             cb({
                 respond: (str) => socket.writeJSON(parseMsg(str, socket.hostPort, socket.localAddress)),
                 data: pack

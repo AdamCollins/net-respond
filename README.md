@@ -1,10 +1,10 @@
 # net-respond
-A Node module written in Typescript that allows for responses to TCP messages. Based off of ExpressJS request handling. 
+A Node module written in Typescript that allows for json objects and direct responses to TCP messages. Based off of ExpressJS request handling. 
 
 [![Build Status][travis-image]][travis-url]
 [![npm version](https://badge.fury.io/js/just.js.svg)](https://badge.fury.io/js/just.js)
 
-net-respond allows simple call and response dynamics for easy communication over TCP. 
+net-respond allows simple send and response json messages for easy communication over TCP in node applications.
 
 ## Install
 ### npm install
@@ -18,11 +18,9 @@ Here is an example of a simple server/client connection
 ### Client
 ```javascript
 import {send} from './net-respond';
-let address = 'localhost:1337'; //Address of host
-let msg = 'Here is some Pie' //Message being sent.
-
-console.log('sending:',msg);
-send(msg,address,(res)=>{
+let address = 'localhost:1337';
+//Send any json object
+send({msg: 'Here is some Pie'},address,(res)=>{
 	console.log('recieved:',res);
 });
 ```
