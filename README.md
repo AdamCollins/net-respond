@@ -4,12 +4,12 @@ A Node module written in Typescript that allows for json objects and direct resp
 [![Build Status][travis-image]][travis-url]
 [![npm version](https://badge.fury.io/js/just.js.svg)](https://badge.fury.io/js/just.js)
 
-net-respond allows simple send and response json messages for easy communication over TCP in node applications.
+A Node module written in Typescript that allows for responses to TCP messages in json format. Based off of ExpressJS request handling. 
 
 ## Install
 ### npm install
 ```
-npm install just.js
+npm install net-respond
 ```
 
 ## Usage example
