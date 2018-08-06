@@ -1,8 +1,7 @@
 # net-respond
 A Node module written in Typescript that allows for json objects and direct responses to TCP messages. Based off of ExpressJS request handling. 
 
-[![Build Status][travis-image]][travis-url]
-[![npm version](https://badge.fury.io/js/just.js.svg)](https://badge.fury.io/js/just.js)
+[![npm version](https://badge.fury.io/js/net-respond.png)](https://badge.fury.io/js/net-respond)
 
 A Node module written in Typescript that allows for responses to TCP messages in json format. Based off of ExpressJS request handling. 
 
